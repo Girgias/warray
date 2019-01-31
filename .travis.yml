@@ -1,0 +1,26 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=fa1dfa85cb939e77609ac6c5a98c6dd18be0b06d282919696bfd25635554e4b9
+    - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
+
+language: php
+
+php:
+  - 7.3
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - if [ $(phpenv version-name) = "7.3" ]; then ./cc-test-reporter before-build; fi
+
+install:
+  - composer selfupdate
+  - composer install
+
+script:
+  - ./vendor/bin/php-cs-fixer fix . --diff --dry-run
+  - ./vendor/bin/psalm
+  - ./vendor/bin/phpunit --coverage-text
+
+after_script:
+  - if [ $(phpenv version-name) = "7.3" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi

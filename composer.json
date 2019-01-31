@@ -1,0 +1,32 @@
+{
+    "name": "girgias/warray",
+    "description": "Static wrapper around PHP array functions",
+    "keywords": ["Array", "PHP", "functions", "wrapper", "Array Static Wrapper"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "George Peter Banyard",
+            "email": "george.banyard@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : "^7.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5",
+        "friendsofphp/php-cs-fixer": "^2.14",
+        "vimeo/psalm": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Girgias\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "prs-4": {
+            "Girgias\\Tests\\": "tests/"
+        }
+    }
+}
